@@ -4,18 +4,17 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Navbar from './components/Navbar'
 import Card from './components/Card'
+import CardForm from './components/CardForm'
 
-function handleChange(e) {
-  console.log(e.target.value)
+function App() {
+
+  
+//CARD CITY STATE
+const addCity = (newCity)=>{
+  setCities([...App, newCity]);
 }
 
-function handleSubmit(e) {
-  e.preventDefault();
-  console.log(e);
-}
-
-//OBJECT ARRAY
-const cities = [
+const [cities, setCities] = useState([
   {
     id: 1,
     title: "San Francisco",
@@ -44,25 +43,17 @@ const cities = [
     description: "",
     isVisited: false
   }
-]
+])
 
-function App() {
   /* TRYING STATE */
   const [count, setCount] = useState(0);
-  const [name, setName] = useState("Daniel");
   const [items, setItems] = useState([1,2,3]);
-  const [user, setUser] = useState({name: "Dany", email: "dani.loddo@mail.it"});
 
   const addItem = ()=>{
     console.log("Items: "+items);
     const newItem = items.length+1; //the last item increased by 1
     console.log("New item: "+newItem);
     setItems([...items, newItem]); // ... spread operator
-  }
-
-  const setUserName = ()=>{
-    const updatedUser = {...user, name: "Daniel"};
-    setUser(updatedUser);
   }
 
   function handleClick() {
@@ -72,9 +63,8 @@ function App() {
 
   return (
     <>
-      <Navbar>
-
-      </Navbar>
+      <Navbar></Navbar>
+      <CardForm addCity={addCity}></CardForm>
       <div className="flex flex-row gap-5 flex-wrap w-full">
         {cities
           .filter((city)=>!city.isVisited)
@@ -96,12 +86,6 @@ function App() {
         <button onClick={handleClick}>
           Aggiungi item allo stato
         </button>
-        <form action="" onSubmit={handleSubmit}>
-          <button type="submit">
-            Invia
-          </button>
-        </form>
-        <input type="text" name="testo" id="testo" onChange={handleChange}/>
       </div>
     </>
   )
