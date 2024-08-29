@@ -1,20 +1,20 @@
-# Usa un'immagine di Node.js
+# Use a node.js image
 FROM node:18
 
-# Imposta la directory di lavoro
+# Set work directory
 WORKDIR /app
 
-# Copia i file package.json e package-lock.json (o yarn.lock)
+# Copy package.json and package-lock.json files
 COPY package*.json ./
 
-# Installa le dipendenze
+# Install dependencies
 RUN npm install
 
-# Copia il resto del codice sorgente
+# Copy the rest of the source code
 COPY . .
 
-# Espone la porta utilizzata da Vite
+# Expose the Vite used port
 EXPOSE 5174
 
-# Comando predefinito per avviare il server di sviluppo Vite
+# Start the Vite server
 CMD ["npm", "run", "dev"]

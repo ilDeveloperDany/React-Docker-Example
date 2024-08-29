@@ -1,7 +1,7 @@
 function Card({title, imgSrc, isVisited}){
     const description = "Descrizione Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae inventore voluptatem porro recusandae, repudiandae expedita";
     return (
-        <div className="rounded bg-zinc-950">
+        <div className="rounded bg-zinc-950 w-[300px]">
             <img className="h-[200px] w-full object-cover" src={imgSrc} alt="" />
             <div className="p-3">
                 <h3 className="text-white text-center font-semibold text-2xl mb-3">{title}</h3>
