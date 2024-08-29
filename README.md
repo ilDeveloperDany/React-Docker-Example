@@ -1,8 +1,10 @@
-# React + Vite
+# React Docker Example
+*by Daniel Loddo*
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple example **React** and **Docker** application. Here you will find code and files where I try these technologies.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*More in detail:*
+- **Docker**
+In this repository there is a Dockerfile to install React using Vite on Node.js version 18.
+- **React**
+I tried some basic functionalities of React, like application state and components.
