@@ -8,12 +8,6 @@ import CardForm from './components/CardForm'
 
 function App() {
 
-  
-//CARD CITY STATE
-const addCity = (newCity)=>{
-  setCities([...App, newCity]);
-}
-
 const [cities, setCities] = useState([
   {
     id: 1,
@@ -45,21 +39,13 @@ const [cities, setCities] = useState([
   }
 ])
 
+//CARD CITY STATE
+const addCity = (newCity)=>{
+  setCities([...cities, newCity]);
+}
+
   /* TRYING STATE */
   const [count, setCount] = useState(0);
-  const [items, setItems] = useState([1,2,3]);
-
-  const addItem = ()=>{
-    console.log("Items: "+items);
-    const newItem = items.length+1; //the last item increased by 1
-    console.log("New item: "+newItem);
-    setItems([...items, newItem]); // ... spread operator
-  }
-
-  function handleClick() {
-    addItem();
-    alert("Click! Added 1 item!");
-  }
 
   return (
     <>
@@ -82,9 +68,6 @@ const [cities, setCities] = useState([
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
-        </button>
-        <button onClick={handleClick}>
-          Aggiungi item allo stato
         </button>
       </div>
     </>
