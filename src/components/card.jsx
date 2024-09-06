@@ -1,5 +1,5 @@
-function Card({title, imgSrc, isVisited}){
-    const description = "Descrizione Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae inventore voluptatem porro recusandae, repudiandae expedita";
+function Card({title, imgSrc, isVisited, children}){
+    const description = children;
     return (
         <div className="rounded bg-zinc-950 w-[300px]">
             <img className="h-[200px] w-full object-cover" src={imgSrc} alt="" />
