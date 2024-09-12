@@ -5,6 +5,8 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Card from './components/Card'
 import CardForm from './components/CardForm'
+import PersonForm from './components/PersonForm'
+import PersonCard from './components/personCard'
 
 function App() {
 
@@ -44,12 +46,20 @@ const addCity = (newCity)=>{
   setCities([...cities, newCity]);
 }
 
+const [people, setPerson] = useState([]);
+
+const addPerson = (newPerson) => {
+  setPerson([...people, newPerson]);
+}
+
   /* TRYING STATE */
   const [count, setCount] = useState(0);
 
   return (
     <>
       <Navbar></Navbar>
+
+      <h2 className="text-white align-center font-medium text-2xl mb-5">City cards</h2>
       <CardForm addCity={addCity}></CardForm>
       <div className="flex flex-row gap-5 flex-wrap w-full">
         {cities
@@ -65,10 +75,26 @@ const addCity = (newCity)=>{
           ))
         }
       </div>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+
+      <h2 className="text-white align-center font-medium text-2xl mb-5">Person cards</h2>
+      <PersonForm addPerson={addPerson}></PersonForm>
+      <div className="flex flex-row gap-5 flex-wrap w-full mt-10 justify-center align-middle">
+        {people
+          .map((person)=>(
+            <PersonCard
+              key={person.id}
+              id={person.id}
+              faceImg={person.faceImg}
+              fiscalCode={person.fiscalCode}
+              name={person.name}
+              surname={person.surname}
+              birthDate={person.birthDate}
+              gender={person.gender}
+              eyesColor={person.eyesColor}
+            >
+            </PersonCard>
+          ))
+        }
       </div>
     </>
   )
