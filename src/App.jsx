@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -52,8 +52,15 @@ const addPerson = (newPerson) => {
   setPerson([...people, newPerson]);
 }
 
-  /* TRYING STATE */
-  const [count, setCount] = useState(0);
+const [posts, setPost] = useState([]);
+
+  /* TEST USE EFFECT */
+
+  useEffect(()=>{
+      fetch('https://jsonplaceholder.typicode.com/posts/') //HTTP request using fetch
+          .then((response)=>response.json())
+          .then((data)=>setPost(data)); //result: array of objects
+  }, [])
 
   return (
     <>
@@ -61,7 +68,7 @@ const addPerson = (newPerson) => {
 
       <h2 className="text-white align-center font-medium text-2xl mb-5">City cards</h2>
       <CardForm addCity={addCity}></CardForm>
-      <div className="flex flex-row gap-5 flex-wrap w-full">
+      <div className="flex flex-row gap-5 flex-wrap w-full mb-5">
         {cities
           .filter((city)=>!city.isVisited)
           .map((city)=>(
@@ -93,6 +100,19 @@ const addPerson = (newPerson) => {
               eyesColor={person.eyesColor}
             >
             </PersonCard>
+          ))
+        }
+      </div>
+
+      <h2 className="text-white text-center font-medium text-2xl mb-5">Posts from API</h2>
+      <div className="flex flex-row gap-5 flex-wrap w-full justify-center">
+        {posts
+          .map((post)=>(
+            <div key={post.id} className="rounded bg-slate-700">
+              <p className="text-white"><span className="font-bold">User id:</span> {post.userId}</p>
+              <p className="text-white font-bold text-xl">{post.title}</p>
+              <p className="text-white">{post.body}</p>
+            </div>
           ))
         }
       </div>
