@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { capitalizeFirstLetter } from "../utils";
 
 function personForm({addPerson}){
@@ -21,7 +21,6 @@ function personForm({addPerson}){
         if(type == "file") 
             setFormData({...formData, faceImg: URL.createObjectURL(e.target.files[0])})
         else setFormData({...formData, [name]: value})
-        console.log(formData);
     }
 
     function handleSubmit(e){
@@ -37,7 +36,24 @@ function personForm({addPerson}){
             eyesColor: formData.eyesColor
         };
         addPerson(newPerson);
+        localStorage.setItem("Person key", formData.id) // SETTING AN ITEM IN THE BROWSER LOCAL STORAGE, LIKE A COOKIE
+        setFormData({ //reset formData after submitted
+            id: Math.random(),
+            faceImg: "",
+            fiscalCode: "",
+            name: "",
+            surname: "",
+            birthDate: "",
+            gender: "male",
+            eyesColor: "brown"
+        })
     }
+
+        /* TEST USE EFFECT */
+
+        useEffect(()=>{
+            console.log(formData);
+        }, [formData]) // (dependencies) only start: [], everytime that one or more states are updated: [state1, state2, ...]
 
     return (
         <div className="flex align-middle justify-center">

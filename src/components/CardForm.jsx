@@ -20,6 +20,13 @@ function CardForm({addCity}){
             isVisited: formData.isVisited
         };
         addCity(newCity);
+        setFormData({ //reset formData after submitted
+            id: 5,
+            title: "",
+            imgSrc: "",
+            description: "",
+            isVisited: false
+        })
     }
 
     const changeHandler = (e) => {
