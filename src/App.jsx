@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -62,6 +62,36 @@ const [posts, setPost] = useState([]);
           .then((data)=>setPost(data)); //result: array of objects
   }, [])
 
+  /* useReducer EXAMPLE */
+  function formReducer (state, action){
+    switch(action.type) {
+      case "CHANGE_FIELD": 
+        return {...state, [action.field]: action.value};
+      case "RESET_FORM":
+        return {name: "", email: ""};
+      default:
+        return state;
+      
+    }
+
+  }
+
+  const [formData, dispatchFormData] = useReducer(formReducer, {name: '', email: ''})
+  
+  const handleChange = (field, value) => {
+    dispatchFormData({type: "CHANGE_FIELD", field, value})
+  }
+
+  const resetForm = () => {
+    dispatchFormData({type: "RESET_FORM"})
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    resetForm();
+  }
+
   return (
     <>
       <Navbar></Navbar>
@@ -103,6 +133,13 @@ const [posts, setPost] = useState([]);
           ))
         }
       </div>
+
+      <form action="" onSubmit={handleSubmit}>
+        <legend className="text-white text-center font-semibold">Name and email form!</legend>
+        <input type="text" name="name" id="name" placeholder="Name" value={formData.name} onChange={(e)=>{handleChange("name", e.target.value)}}/>
+        <input type="text" name="email" id="email" placeholder="Email" value={formData.email} onChange={(e)=>{handleChange("email", e.target.value)}}/>
+        <button type="submit">Submit</button>
+      </form>
 
       <h2 className="text-white text-center font-medium text-2xl mb-5">Posts from API</h2>
       <div className="flex flex-row gap-5 flex-wrap w-full justify-center">
