@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import TestContext from "../stores/TestContext";
 
 function CardForm({addCity}){
 
@@ -38,10 +39,12 @@ function CardForm({addCity}){
         })
         console.log(formData);
     }
+
+    const {count} = useContext(TestContext);
     
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-10 w-full justify-center align-middle">
-            <legend className="text-white text-center font-semibold">Add a city card!</legend>
+            <legend className="text-white text-center font-semibold">Add a city card! {count}</legend>
             <input type="text" name="title" id="title" placeholder="City name" defaultValue={formData.title} onChange={changeHandler}/>
             <input type="text" name="imgSrc" id="imgSrc" placeholder="Img URL" defaultValue={formData.imgSrc} onChange={changeHandler}/>
             <textarea name="description" id="description" placeholder="A short description" defaultValue={formData.description} onChange={changeHandler}></textarea>

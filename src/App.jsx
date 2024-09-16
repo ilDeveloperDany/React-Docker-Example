@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useEffect, useReducer, useContext } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -7,6 +7,8 @@ import Card from './components/Card'
 import CardForm from './components/CardForm'
 import PersonForm from './components/PersonForm'
 import PersonCard from './components/personCard'
+import TestContext from './stores/TestContext'
+import ContextTest from './components/ContextTest'
 
 function App() {
 
@@ -92,8 +94,13 @@ const [posts, setPost] = useState([]);
     resetForm();
   }
 
+
+  //COUNT FOR CONTEXT
+  const [count, setCount] = useState(0);
+
   return (
-    <>
+    <TestContext.Provider value={{count, setCount}}>
+      <ContextTest></ContextTest>
       <Navbar></Navbar>
 
       <h2 className="text-white align-center font-medium text-2xl mb-5">City cards</h2>
@@ -153,7 +160,7 @@ const [posts, setPost] = useState([]);
           ))
         }
       </div>
-    </>
+    </TestContext.Provider>
   )
 }
 
