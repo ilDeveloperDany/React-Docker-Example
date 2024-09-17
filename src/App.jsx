@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useReducer, useContext } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -7,6 +7,8 @@ import Card from './components/Card'
 import CardForm from './components/CardForm'
 import PersonForm from './components/PersonForm'
 import PersonCard from './components/personCard'
+import TestContext from './stores/TestContext'
+import ContextTest from './components/ContextTest'
 
 function App() {
 
@@ -52,16 +54,58 @@ const addPerson = (newPerson) => {
   setPerson([...people, newPerson]);
 }
 
-  /* TRYING STATE */
+const [posts, setPost] = useState([]);
+
+  /* TEST USE EFFECT */
+
+  useEffect(()=>{
+      fetch('https://jsonplaceholder.typicode.com/posts/') //HTTP request using fetch
+          .then((response)=>response.json())
+          .then((data)=>setPost(data)); //result: array of objects
+  }, [])
+
+  /* useReducer EXAMPLE */
+  function formReducer (state, action){
+    switch(action.type) {
+      case "CHANGE_FIELD": 
+        return {...state, [action.field]: action.value};
+      case "RESET_FORM":
+        return {name: "", email: ""};
+      default:
+        return state;
+      
+    }
+
+  }
+
+  const [formData, dispatchFormData] = useReducer(formReducer, {name: '', email: ''})
+  
+  const handleChange = (field, value) => {
+    dispatchFormData({type: "CHANGE_FIELD", field, value})
+  }
+
+  const resetForm = () => {
+    dispatchFormData({type: "RESET_FORM"})
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    resetForm();
+  }
+
+
+  //COUNT FOR CONTEXT
   const [count, setCount] = useState(0);
 
   return (
-    <>
+    <TestContext.Provider value={{count, setCount}}>
+      <ContextTest></ContextTest>
       <Navbar></Navbar>
 
       <h2 className="text-white align-center font-medium text-2xl mb-5">City cards</h2>
       <CardForm addCity={addCity}></CardForm>
-      <div className="flex flex-row gap-5 flex-wrap w-full">
+      <div className="flex flex-row gap-5 flex-wrap w-full mb-5">
         {cities
           .filter((city)=>!city.isVisited)
           .map((city)=>(
@@ -96,7 +140,27 @@ const addPerson = (newPerson) => {
           ))
         }
       </div>
-    </>
+
+      <form action="" onSubmit={handleSubmit}>
+        <legend className="text-white text-center font-semibold">Name and email form!</legend>
+        <input type="text" name="name" id="name" placeholder="Name" value={formData.name} onChange={(e)=>{handleChange("name", e.target.value)}}/>
+        <input type="text" name="email" id="email" placeholder="Email" value={formData.email} onChange={(e)=>{handleChange("email", e.target.value)}}/>
+        <button type="submit">Submit</button>
+      </form>
+
+      <h2 className="text-white text-center font-medium text-2xl mb-5">Posts from API</h2>
+      <div className="flex flex-row gap-5 flex-wrap w-full justify-center">
+        {posts
+          .map((post)=>(
+            <div key={post.id} className="rounded bg-slate-700">
+              <p className="text-white"><span className="font-bold">User id:</span> {post.userId}</p>
+              <p className="text-white font-bold text-xl">{post.title}</p>
+              <p className="text-white">{post.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </TestContext.Provider>
   )
 }
 
