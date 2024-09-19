@@ -1,7 +1,10 @@
-import { useContext, useState } from "react";
-import TestContext from "../stores/TestContext";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { add } from "../redux/citiesSlice";
 
-function CardForm({addCity}){
+function CardForm(){
+
+    const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
         id: 5,
@@ -20,7 +23,6 @@ function CardForm({addCity}){
             description: formData.description,
             isVisited: formData.isVisited
         };
-        addCity(newCity);
         setFormData({ //reset formData after submitted
             id: 5,
             title: "",
@@ -28,6 +30,7 @@ function CardForm({addCity}){
             description: "",
             isVisited: false
         })
+        dispatch(add(newCity));
     }
 
     const changeHandler = (e) => {
@@ -39,17 +42,15 @@ function CardForm({addCity}){
         })
         console.log(formData);
     }
-
-    const {count} = useContext(TestContext);
     
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-10 w-full justify-center align-middle">
-            <legend className="text-white text-center font-semibold">Add a city card! {count}</legend>
-            <input type="text" name="title" id="title" placeholder="City name" defaultValue={formData.title} onChange={changeHandler}/>
-            <input type="text" name="imgSrc" id="imgSrc" placeholder="Img URL" defaultValue={formData.imgSrc} onChange={changeHandler}/>
-            <textarea name="description" id="description" placeholder="A short description" defaultValue={formData.description} onChange={changeHandler}></textarea>
+            <legend className="text-white text-center font-semibold">Add a city card!</legend>
+            <input type="text" name="title" id="title" placeholder="City name" value={formData.title} onChange={changeHandler}/>
+            <input type="text" name="imgSrc" id="imgSrc" placeholder="Img URL" value={formData.imgSrc} onChange={changeHandler}/>
+            <textarea name="description" id="description" placeholder="A short description" value={formData.description} onChange={changeHandler}></textarea>
             <label htmlFor="isVisited">Is it visited?</label>
-            <input type="checkbox" name="isVisited" id="isVisited" defaultChecked={formData.isVisited} onChange={changeHandler}/>
+            <input type="checkbox" name="isVisited" id="isVisited" checked={formData.isVisited} onChange={changeHandler}/>
             <button type="submit">Add city card</button>
         </form>
     )
