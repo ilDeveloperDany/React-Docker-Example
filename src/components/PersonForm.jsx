@@ -1,7 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { capitalizeFirstLetter } from "../utils";
+import { useDispatch, useSelector } from "react-redux";
+import { add } from "../redux/peopleSlice";
 
-function personForm({addPerson}){
+function personForm(){
+
+    const dispatch = useDispatch();
+    const people = useSelector((state) => state.people.value);
+    const fileInputRef = useRef(null);
 
     /* STATE FUNCTIONS & HANDLE FUNCTIONS */
 
@@ -25,6 +31,7 @@ function personForm({addPerson}){
 
     function handleSubmit(e){
         e.preventDefault();
+
         const newPerson = {
             id: formData.id,
             faceImg: formData.faceImg,
@@ -35,8 +42,16 @@ function personForm({addPerson}){
             gender: formData.gender, 
             eyesColor: formData.eyesColor
         };
-        addPerson(newPerson);
+
+        dispatch(add(newPerson));
+
         localStorage.setItem("Person key", formData.id) // SETTING AN ITEM IN THE BROWSER LOCAL STORAGE, LIKE A COOKIE
+
+            // Reset file input using ref
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+
         setFormData({ //reset formData after submitted
             id: Math.random(),
             faceImg: "",
@@ -52,14 +67,14 @@ function personForm({addPerson}){
         /* TEST USE EFFECT */
 
         useEffect(()=>{
-            console.log(formData);
-        }, [formData]) // (dependencies) only start: [], everytime that one or more states are updated: [state1, state2, ...]
+            console.log(people);
+        }, [people]) // (dependencies) only start: [], everytime that one or more states are updated: [state1, state2, ...]
 
     return (
         <div className="flex align-middle justify-center">
             <form action="" onSubmit={handleSubmit} className="w-[400px] flex flex-col justify-center align-middle gap-2">
                 <label htmlFor="faceImg" className="text-white">Image of your face:</label>
-                <input type="file" name="faceImg" id="faceImg" className="text-white" onChange={handleChange} value={formData.faceImg}/>
+                <input type="file" name="faceImg" id="faceImg" className="text-white" onChange={handleChange} ref={fileInputRef}/>
                 <input type="text" name="fiscalCode" id="fiscalCode" placeholder="Fiscal code" onChange={handleChange}/>
                 <fieldset className="grid grid-cols-2 gap-2">
                     <input type="text" name="name" id="name" className="col" placeholder="Name" onChange={handleChange} value={formData.name}/>
