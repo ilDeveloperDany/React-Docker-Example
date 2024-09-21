@@ -75,7 +75,7 @@ function personForm(){
             <form action="" onSubmit={handleSubmit} className="w-[400px] flex flex-col justify-center align-middle gap-2">
                 <label htmlFor="faceImg" className="text-white">Image of your face:</label>
                 <input type="file" name="faceImg" id="faceImg" className="text-white" onChange={handleChange} ref={fileInputRef}/>
-                <input type="text" name="fiscalCode" id="fiscalCode" placeholder="Fiscal code" onChange={handleChange}/>
+                <input type="text" name="fiscalCode" id="fiscalCode" placeholder="Fiscal code" onChange={handleChange} value={formData.fiscalCode}/>
                 <fieldset className="grid grid-cols-2 gap-2">
                     <input type="text" name="name" id="name" className="col" placeholder="Name" onChange={handleChange} value={formData.name}/>
                     <input type="text" name="surname" id="surname" className="col" placeholder="Surname" onChange={handleChange} value={formData.surname}/>

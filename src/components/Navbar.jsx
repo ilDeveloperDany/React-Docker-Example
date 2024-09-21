@@ -1,17 +1,23 @@
 import './Navbar.css'
-import NavbarLink from './NavbarLink'
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     return (
-        <ul className='flex flex-row justify-evenly w-full mb-5'>
+        <ul className='flex flex-row justify-center w-full mb-5 gap-10'>
             <li>
-                <NavbarLink>Pagina 1</NavbarLink>
+                <Link to={'/'}>Home</Link>
             </li>
             <li>
-                <NavbarLink>Pagina 2</NavbarLink>
+                <Link to={'/contacts'}>Contacts</Link>
             </li>
             <li>
-                <NavbarLink>Pagina 3</NavbarLink>
+                <Link to={'/about'}>About</Link>
+            </li>
+            <li>
+                <Link to={'/city-cards'}>City cards</Link>
+            </li>
+            <li>
+                <Link to={'/person-cards'}>Person cards</Link>
             </li>
         </ul>
     )
