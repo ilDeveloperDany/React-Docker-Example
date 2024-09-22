@@ -3,8 +3,8 @@ import './App.css'
 import Navbar from './components/Navbar'
 import CardForm from './components/CardForm'
 import PersonForm from './components/PersonForm'
-import { useSelector } from 'react-redux'
 import Count from './components/Count'
+import useCounter from './hooks/useCounter'
 
 function App() {
 
@@ -19,8 +19,7 @@ const [posts, setPost] = useState([]);
           .catch((error) => console.error("Error fetching posts:", error));
   }, [])
 
-  const cities = useSelector((state) => state.cities.value);
-  const people = useSelector((state) => state.people.value);
+  useCounter();
 
   return (
     <>
